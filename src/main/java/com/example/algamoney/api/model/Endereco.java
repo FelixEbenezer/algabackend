@@ -7,11 +7,11 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class Endereco {
 	
-	@NotNull
+	// @NotNull
 	private String logradouro;
 	
-	@NotNull
-	@Size(min=1, max=3)
+	//@NotNull
+	//@Size(min=1, max=3)
 	private String numero;
 	private String complemento;
 	private String bairro;
