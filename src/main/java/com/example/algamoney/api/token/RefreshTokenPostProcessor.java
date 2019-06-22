@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 
-/*
+
 @Profile("oauth-security") // Também faltou o profile
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken>{
@@ -68,7 +68,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 }
 
 
-*/
+/*
 @Profile("oauth-security")
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
@@ -126,3 +126,4 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 	
 
 }
+*/
