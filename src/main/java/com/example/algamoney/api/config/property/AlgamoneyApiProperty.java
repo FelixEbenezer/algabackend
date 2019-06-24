@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class AlgamoneyApiProperty {
 	
 	//aqui para definir dinamicamente que o sistema aceite outras origens para alen de 8080 como 8000
-	private String originPermitida = "https://algamoney-angular-felix.herokuapp.com";
+	private String originPermitida = "http://localhost:4200";
 
 	private final Seguranca seguranca = new Seguranca();
 
