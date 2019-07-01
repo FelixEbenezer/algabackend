@@ -40,9 +40,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		 // aqui estamos a definir como o usuario de nosso API da acesso ao ResourceServer ao
 		// um determinado cliente
 		.authorizedGrantTypes("password", "refresh_token")  //adicionar o refresch token que sera usado para nos dar o novo acces token
-		.accessTokenValiditySeconds(60)//minutos durante o qual o token do cliente sera valido
+		.accessTokenValiditySeconds(240)//minutos durante o qual o token do cliente sera valido
 		                                     //neste caso é 30min, 1800/60
-		.refreshTokenValiditySeconds(120)// o tempo de vida do refresh token, posemos 1 dia (24horas)
+		.refreshTokenValiditySeconds(960)// o tempo de vida do refresh token, posemos 1 dia (24horas)
 		//adicionamos um segundo cliente
 		.and()
 		.withClient("mobile")
