@@ -21,35 +21,10 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
 
 @Profile("oauth-security")
 @Configuration //Isto é opcional ....porque ja esta dentro de EnableSecurity
-@EnableWebSecurity
-@EnableResourceServer
 //para configurar permissoes , habilitar segurança nos metodos:
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-	@Autowired
-	private UserDetailsService userDetailsService; 
-	
-	@Autowired
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-	      //definir senha e usuario para autenticacao basica em memoria e nao em BDD
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-	}
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		// TODO Auto-generated method stub
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	public MethodSecurityExpressionHandler createExpressionHandler() {
-		// TODO Auto-generated method stub
-		return new OAuth2MethodSecurityExpressionHandler();
-	}
-
-
-
-	
+		
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()  //Definir as autorizacoes
@@ -66,5 +41,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
 		resources.stateless(true);
 	}
+	
+	@Bean
+	public MethodSecurityExpressionHandler createExpressionHandler() {
+		return new OAuth2MethodSecurityExpressionHandler();
+	}
+
 
 }

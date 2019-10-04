@@ -2,6 +2,7 @@ package com.example.algamoney.api.resource;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -58,7 +59,7 @@ public class PessoaResource {
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Pessoa> criarPessoa(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response)
 	{
-		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
+		Pessoa pessoaSalva = pessoaService.salvar(pessoa);
 		
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getCodigo()));
 		
@@ -69,8 +70,8 @@ public class PessoaResource {
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Pessoa> listarPeloCodigo(@PathVariable Long codigo)
 	{
-		Pessoa p = pessoaRepository.findOne(codigo);
-		return p == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(p);
+		Optional<Pessoa> p = pessoaRepository.findById(codigo);
+		return p.isPresent() ? ResponseEntity.ok(p.get()) :ResponseEntity.notFound().build();
 	}
 	
 		
@@ -79,7 +80,7 @@ public class PessoaResource {
 	@PreAuthorize("hasAuthority('ROLE_REMOVER_PESSOA') and #oauth2.hasScope('write')")
 	public void eliminarPessoa(@PathVariable Long codigo)
 	{
-		pessoaRepository.delete(codigo);
+		pessoaRepository.deleteById(codigo);
 	}
 	
 	@PutMapping("/{codigo}")

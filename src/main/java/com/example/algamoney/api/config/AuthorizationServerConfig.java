@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -23,19 +24,20 @@ import com.example.algamoney.api.config.token.CustomTokenEnhancer;
 
 @Profile("oauth-security")
 @Configuration
-@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationManager authenticationManager; //que vai gerar autenticacao de usuario pegando senha e nome
 	
+	@Autowired
+	private UserDetailsService userDetailsService;
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		//O usuario autoriza o cliente a acessar o nosso ResourceServer
 		clients.inMemory()  //configurar o cliente em memoria e nao em BDD
 		.withClient("angular")  // o cliente que vai acessar o nosso ResourceServer ou API
-		.secret("angu")    // a senha do cliente
+		.secret("$2a$10$dqF909jo27aldh/lyVVj3ujKhn8SEjL9OazVqTcoIxkQU1jWu.Zsu") //angu   // a senha do cliente
 		.scopes("read", "write")  //definir scopes ou direito do cliente, nao confundir cliente com usuario
 		 // aqui estamos a definir como o usuario de nosso API da acesso ao ResourceServer ao
 		// um determinado cliente
@@ -46,7 +48,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		//adicionamos um segundo cliente
 		.and()
 		.withClient("mobile")
-		.secret("mobi")
+		.secret("$2a$10$4qoEDtZshyDTA0j6dVd7u.9Cgn8MBR9LL8O76pTMygXkXuqXhMmde") //mobi
 		.scopes("read")
 		.authorizedGrantTypes("password", "refresh_token")
 		.accessTokenValiditySeconds(60)
@@ -64,6 +66,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.tokenEnhancer(tokenEnhancerChain)
 		.reuseRefreshTokens(false)  //sempre que pedir um novo refresh token, um outro novo refresh token sera mais criado para caso vir precisar mais e sucessivamente durante 1 dia
 		                           // para que o cliente nao possa se desligar inesperadamente
+		.userDetailsService(userDetailsService)
 		.authenticationManager(authenticationManager);
 	}
 	
