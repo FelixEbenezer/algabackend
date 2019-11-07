@@ -56,7 +56,7 @@ public class LancamentoService {
 	private Mailer mailer;
 	
 	// actualizadao o metodo abaixo
-	@Scheduled(cron = "0 30 15 7 * * ")
+	@Scheduled(cron = "0 30 19 7 * * ")
 	public void avisarSobreLancamentosVencidos() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Preparando envio de "
