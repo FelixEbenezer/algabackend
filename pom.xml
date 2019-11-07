@@ -71,13 +71,14 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-java8time</artifactId>
         </dependency>
-        
+      
+      <!--   
         <dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
 		</dependency>
         
-		
+		 -->
 		
 		<!-- Migracoes - Flyway -->
 		<dependency>
